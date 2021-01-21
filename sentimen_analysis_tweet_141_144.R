@@ -1,5 +1,8 @@
 library(sentiment) #package for for Sentiment Analysis
 library(ggplot2) #package for data visualisations
+library(plyr)
+library(ggpubr)
+
 
 #Import Data
 
@@ -60,32 +63,32 @@ data2 <- dataTrump$text
 # Input: text (tweets); Output: emotion class
 
   # emotion classification
-  emotionClass1 <- classify_emotion(data1, algorithm="bayes", prior=1.0)
-  emotionClass2 <- classify_emotion(data2, algorithm="bayes", prior=1.0)
+  emotionClass1 = classify_emotion(data1, algorithm="bayes", prior=1.0)
+  emotionClass2 = classify_emotion(data2, algorithm="bayes", prior=1.0)
 
   # extract emotion with the best possible fit
-  emotion1 <- emotionClass1[,7]
-  emotion2 <- emotionClass2[,7]
+  emotion1 = emotionClass1[,7]
+  emotion2 = emotionClass2[,7]
   
   # setting emotions having NA to "unknown"
-  emotion1[is.na(emotion1)] <- "unknown"
-  emotion2[is.na(emotion2)] <- "unknown"
+  emotion1[is.na(emotion1)] = "unknown"
+  emotion2[is.na(emotion2)] = "unknown"
 
 
 # Sentiment Analysis using Polarity Classification
 # Input: text (tweets); Output: polarity class
 
   # polarity classification
-  polarityClass1 <- classify_polarity(data1, algorithm="bayes")
-  polarityClass2 <- classify_polarity(data2, algorithm="bayes")
+  polarityClass1 = classify_polarity(data1, algorithm="bayes")
+  polarityClass2 = classify_polarity(data2, algorithm="bayes")
   
   # extract polarity with the best possible fit
-  polarity1 <- polarityClass1[,4]
-  polarity2 <- polarityClass2[,4]
+  polarity1 = polarityClass1[,4]
+  polarity2 = polarityClass2[,4]
   
   # setting polarity having NA to "unknown"
-  polarity1[is.na(polarity1)] <- "unknown"
-  polarity2[is.na(polarity2)] <- "unknown"
+  polarity1[is.na(polarity1)] = "unknown"
+  polarity2[is.na(polarity2)] = "unknown"
 
 # Store results in dataframe
   results_data1 <- data.frame(text=data1, emotion=emotion1, polarity=polarity1)
@@ -104,85 +107,33 @@ data2 <- dataTrump$text
 # Plot distribution of tweet sentiments
 # Emotion Plot
   #Biden
-  ggplot(results_data1_sort, aes(x=emotion)) +
-    geom_bar(aes(y=..count.., fill=emotion)) +
-    scale_fill_manual(values = c("#bababa", "#96f78f", "#8fdaf7","#f7988f","#fa5c5c","#f7d48f","#dea050")) +
-    labs(x="emotion categories", y="number of tweets",title = "Sentiment Analysis towards Joe Biden Tweets") +
-    theme(plot.title = element_text(size=11))
+  plot1 <- ggplot(results_data1_sort, aes(x=emotion)) +
+            geom_bar(aes(y=..count.., fill=emotion)) +
+            scale_fill_manual(values = c("#bababa", "#96f78f", "#8fdaf7","#f7988f","#fa5c5c","#f7d48f","#dea050")) +
+            labs(x="emotion categories", y="number of tweets",title = "Sentiment Analysis towards Joe Biden Tweets") +
+            theme(plot.title = element_text(size=12))
                                                                                                                                  
-  plotSentiments1 <- function(sentiment_dataframe, title)
-  {
-    library(ggplot2)
-    ggplot(sentiment_dataframe, aes(x=emotion))+
-    geom_bar(aes(y=..count.., fill=emotion))+
-    scale_fill_manual(values = c("#bababa", "#96f78f", "#8fdaf7","#f7988f","#fa5c5c","#f7d48f","#dea050")) +
-    ggtitle(title)+
-    theme(legend.position="right",plot.title = element_text(size=11))+
-    ylab("Number of Tweets")+
-    xlab("Emotion Categories")
-  }
-  plotSentiments1(results_data1_sort, "Sentiment Analysis towards Joe Biden Tweets")
-  
   #Trump
-  ggplot(results_data2_sort, aes(x=emotion)) +
-    geom_bar(aes(y=..count.., fill=emotion)) +
-    scale_fill_manual(values = c("#bababa", "#96f78f", "#8fdaf7","#fa5c5c","#f7988f","#dea050","#f7d48f")) +
-    labs(x="emotion categories", y="number of tweets", title = "Sentiment Analysis towards Donald Trump Tweets")+
-    theme(plot.title = element_text(size=11))
-  
-  plotSentiments2 <- function(sentiment_dataframe, title)
-  {
-    library(ggplot2)
-    ggplot(sentiment_dataframe, aes(x=emotion)) +
-    geom_bar(aes(y=..count.., fill=emotion)) +
-    scale_fill_manual(values = c("#bababa", "#96f78f", "#8fdaf7","#fa5c5c","#f7988f","#dea050","#f7d48f")) +
-    ggtitle(title) +
-    theme(legend.position="right",plot.title = element_text(size=11)) +
-    ylab("Number of Tweets") +
-    xlab("Emotion Categories") 
-  }
-  plotSentiments2(results_data2_sort, "Sentiment Analysis towards Donald Trump Tweets")
+  plot2 <- ggplot(results_data2_sort, aes(x=emotion)) +
+              geom_bar(aes(y=..count.., fill=emotion)) +
+              scale_fill_manual(values = c("#bababa", "#96f78f", "#8fdaf7","#fa5c5c","#f7988f","#dea050","#f7d48f")) +
+              labs(x="emotion categories", y="number of tweets", title = "Sentiment Analysis towards Donald Trump Tweets")+
+              theme(plot.title = element_text(size=12))
   
 # Polarity Plot
   #Biden
-  ggplot(results_data1_sort, aes(x=polarity))+
-  geom_bar(aes(y=..count.., fill=polarity)) +
-  scale_fill_brewer(palette="Set1") +
-  labs(x="polarity categories", y="number of tweets",title="Sentiment Analysis towards Joe Biden Tweets")+
-  theme(plot.title = element_text(size=11))
+  plot3 <- ggplot(results_data1_sort, aes(x=polarity))+
+            geom_bar(aes(y=..count.., fill=polarity)) +
+            scale_fill_brewer(palette="Set1") +
+            labs(x="polarity categories", y="number of tweets",title="Sentiment Analysis towards Joe Biden Tweets")+
+            theme(plot.title = element_text(size=12))
   
-  plotSentiments2_1 <- function(sentiment_dataframe, title)
-  {
-    library(ggplot2)
-    ggplot(results_data1_sort, aes(x=polarity)) +
-    geom_bar(aes(y=..count.., fill=polarity)) +
-    scale_fill_brewer(palette="Set1") +
-    ggtitle(title) +
-    theme(legend.position="right",plot.title = element_text(size=11)) +
-    ylab("Number of Tweets") +
-    xlab("Polarity Categories")
-  }
-  plotSentiments2_1(results_data1_sort, "Sentiment Analysis towards Joe Biden Tweets")
-
   #Trump
-  ggplot(results_data2_sort, aes(x=polarity))+
-    geom_bar(aes(y=..count.., fill=polarity)) +
-    scale_fill_brewer(palette="Set1") +
-    labs(x="polarity categories", y="number of tweets",title = "Sentiment Analysis towards Donald Trump Tweets")+
-    theme(plot.title = element_text(size=11))
-  
-  plotSentiments2_2 <- function(sentiment_dataframe, title)
-  {
-    library(ggplot2)
-    ggplot(results_data2_sort, aes(x=polarity)) +
-      geom_bar(aes(y=..count.., fill=polarity)) +
-      scale_fill_brewer(palette="Set1") +
-      ggtitle(title) +
-      theme(legend.position="right",plot.title = element_text(size=11)) +
-      ylab("Number of Tweets") +
-      xlab("Polarity Categories")
-  }
-  plotSentiments2_2(results_data2_sort, "Sentiment Analysis towards Donald Trump Tweets")
+  plot4 <- ggplot(results_data2_sort, aes(x=polarity))+
+            geom_bar(aes(y=..count.., fill=polarity)) +
+            scale_fill_brewer(palette="Set1") +
+            labs(x="polarity categories", y="number of tweets",title = "Sentiment Analysis towards Donald Trump Tweets")+
+            theme(plot.title = element_text(size=12))
   
 # Data
   table(results_data1_sort$emotion)

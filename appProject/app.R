@@ -1,13 +1,13 @@
 library(shiny)
 
 # Load data
-dataBiden <- read.csv("~/Project-Data-Science/Bidenall.csv")
-dataTrump <- read.csv("~/Project-Data-Science/Trumpall.csv")
 dataCleanedBiden <- read.csv("~/Project-Data-Science/dataCleanedBiden.csv")
 dataCleanedTrump <- read.csv("~/Project-Data-Science/dataCleanedTrump.csv")
 dataSentimenBiden <- read.csv("~/Project-Data-Science/dataSentimenBiden.csv")
 dataSentimenTrump <- read.csv("~/Project-Data-Science/dataSentimenTrump.csv")
 
+#source to functions used
+source("~/Project-Data-Science/sentimen_analysis_tweet_141_144.R")
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
@@ -29,8 +29,8 @@ ui <- fluidPage(
             tabPanel("Data Cleaned Trump", DT::dataTableOutput('dataCleanedTrump')),
             tabPanel("Data Sentimen Biden", DT::dataTableOutput('dataSentimenBiden')),
             tabPanel("Data Sentimen Trump", DT::dataTableOutput('dataSentimenTrump')),
-            tabPanel("Plot Tweet Biden", plotOutput("plot1")),
-            tabPanel("Plot Tweet Trump", plotOutput("plot2"))
+            tabPanel("Sentiment Analysis (Emotion) Plot", plotOutput("plot1")),
+            tabPanel("Sentiment Analysis (Polarity) Plot", plotOutput("plot2"))
         )
     )
    )
@@ -64,7 +64,14 @@ server <- function(input, output) {
     output$dataSentimenTrump = DT::renderDataTable({
         DT::datatable(dataSentimenTrump, options = list(lengthChange = FALSE))
     })
-    
+    output$plot1 <- renderPlot({
+        ggarrange(plot1, plot2 , 
+                  ncol = 1, nrow = 2)
+    })
+    output$plot2 <- renderPlot({
+        ggarrange(plot3, plot4 , 
+                  ncol = 1, nrow = 2)
+    })
 }
 
 # Run the application 
