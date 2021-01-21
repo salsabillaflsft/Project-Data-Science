@@ -138,7 +138,7 @@ data2 <- dataTrump$text
   ggplot(results_data2_sort, aes(x=emotion)) +
     geom_bar(aes(y=..count.., fill=emotion)) +
     scale_fill_manual(values = c("#bababa", "#96f78f", "#8fdaf7","#fa5c5c","#f7988f","#dea050","#f7d48f")) +
-    labs(x="emotion categories", y="number of tweets", title = "Sentiment Analysis towards Donald Trump")+
+    labs(x="emotion categories", y="number of tweets", title = "Sentiment Analysis towards Donald Trump Tweets")+
     theme(plot.title = element_text(size=12))
   
   plotSentiments2 <- function(sentiment_dataframe, title)
@@ -152,14 +152,14 @@ data2 <- dataTrump$text
     ylab("Number of Tweets") +
     xlab("Emotion Categories") 
   }
-  plotSentiments2(results_data2_sort, "Sentiment Analysis towards Donald Trump")
+  plotSentiments2(results_data2_sort, "Sentiment Analysis towards Donald Trump Tweets")
   
 # Polarity Plot
   #Biden
   ggplot(results_data1_sort, aes(x=polarity))+
   geom_bar(aes(y=..count.., fill=polarity)) +
   scale_fill_brewer(palette="Set1") +
-  labs(x="polarity categories", y="number of tweets",title="Sentiment Analysis towards Joe Biden")+
+  labs(x="polarity categories", y="number of tweets",title="Sentiment Analysis towards Joe Biden Tweets")+
   theme(plot.title = element_text(size=12))
   
   plotSentiments2_1 <- function(results_data1_sort, title)
@@ -173,13 +173,13 @@ data2 <- dataTrump$text
     ylab("Number of Tweets") +
     xlab("Polarity Categories")
   }
-  plotSentiments2_1(results_data1_sort, "Sentiment Analysis towards Joe Biden")
+  plotSentiments2_1(results_data1_sort, "Sentiment Analysis towards Joe Biden Tweets")
 
   #Trump
   ggplot(results_data2_sort, aes(x=polarity))+
     geom_bar(aes(y=..count.., fill=polarity)) +
     scale_fill_brewer(palette="Set1") +
-    labs(x="polarity categories", y="number of tweets",title = "Sentiment Analysis towards Donald Trump")+
+    labs(x="polarity categories", y="number of tweets",title = "Sentiment Analysis towards Donald Trump Tweets")+
     theme(plot.title = element_text(size=12))
   
   plotSentiments2_2 <- function(results_data2_sort, title)
@@ -193,7 +193,7 @@ data2 <- dataTrump$text
       ylab("Number of Tweets") +
       xlab("Polarity Categories")
   }
-  plotSentiments2_2(results_data2_sort, "Sentiment Analysis towards Donald Trump")
+  plotSentiments2_2(results_data2_sort, "Sentiment Analysis towards Donald Trump Tweets")
   
 # Data
   table(results_data1_sort$emotion)
