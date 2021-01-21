@@ -1,7 +1,8 @@
 library(tm)
-library(SnowballC)
-library(tidytext)
 library(NLP)
+library(Rstem)
+library(sentiment)
+library(SnowballC)
 library(SentimentAnalysis)
 library(plyr)
 library(textclean)
@@ -11,13 +12,15 @@ library(dplyr)
 library(tau)
 
 #Import Data
+
 dataBiden <- read.csv("~/Project-Data-Science/Bidenall.csv")
 dataTrump <- read.csv("~/Project-Data-Science/Trumpall.csv")
 
 data1 <- dataBiden$text
 data2 <- dataTrump$text
 
-#Data Cleaning
+# Data Cleaning
+
 #clean rt entities
 data1 = gsub("(RT|via)((?:\\b\\W*@\\w+)+)", "", data1)
 data2 = gsub("(RT|via)((?:\\b\\W*@\\w+)+)", "", data2)
@@ -61,3 +64,30 @@ names(data2) = NULL
 
 write.csv(data1,"~\\Project-Data-Science\\dataCleanedBiden.csv")
 write.csv(data2,"~\\Project-Data-Science\\dataCleanedTrump.csv")
+
+
+# Sentiment Analysis using Emotion Classification
+  # Input: text (tweets); Output: emotion class
+  
+  # emotion classification
+  emotionClass <- classify_emotion(data1, algorithm="bayes", prior=1.0)
+  
+  # extract emotion with the best possible fit
+  emotion <- emotionClass[,7]
+  
+  # setting emotions having NA to "unknown"
+  emotion[is.na(emotion)] <- "unknown"
+  
+
+# Sentiment Analysis using Polarity Classification
+  # Input: text (tweets); Output: polarity class
+  
+  # polarity classification
+  polarityClass <- classify_polarity(data1, algorithm="bayes")
+  
+  # extract polarity with the best possible fit
+  polarity <- polarityClass[,4]
+  
+  # setting polarity having NA to "unknown"
+  polarity[is.na(polarity)] <- "unknown"
+
