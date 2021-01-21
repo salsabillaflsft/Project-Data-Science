@@ -71,6 +71,7 @@ write.csv(data2,"~\\Project-Data-Science\\dataCleanedTrump.csv")
   
   # emotion classification
   emotionClass <- classify_emotion(data1, algorithm="bayes", prior=1.0)
+  emotionClass <- classify_emotion(data2, algorithm="bayes", prior=1.0)
   
   # extract emotion with the best possible fit
   emotion <- emotionClass[,7]
@@ -84,6 +85,8 @@ write.csv(data2,"~\\Project-Data-Science\\dataCleanedTrump.csv")
   
   # polarity classification
   polarityClass <- classify_polarity(data1, algorithm="bayes")
+  polarityClass <- classify_polarity(data2, algorithm="bayes")
+  
   
   # extract polarity with the best possible fit
   polarity <- polarityClass[,4]
@@ -91,3 +94,8 @@ write.csv(data2,"~\\Project-Data-Science\\dataCleanedTrump.csv")
   # setting polarity having NA to "unknown"
   polarity[is.na(polarity)] <- "unknown"
 
+# Store results in dataframe
+  results_data1 <- data.frame(text=data1, emotion=emotion, polarity=polarity)
+  results_data2 <- data.frame(text=data2, emotion=emotion, polarity=polarity)
+  View(results_data1) 
+  View(results_data2)
