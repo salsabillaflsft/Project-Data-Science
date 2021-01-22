@@ -1,3 +1,5 @@
+library(tm)
+library(SentimentAnalysis)
 library(sentiment) #package for for Sentiment Analysis
 library(ggplot2) #package for data visualisations
 library(plyr)

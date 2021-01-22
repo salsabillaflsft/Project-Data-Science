@@ -1,4 +1,5 @@
 library(shiny)
+library(shinythemes)
 
 # Load data
 dataCleanedBiden <- read.csv("~/Project-Data-Science/dataCleanedBiden.csv")
@@ -10,30 +11,23 @@ dataSentimenTrump <- read.csv("~/Project-Data-Science/dataSentimenTrump.csv")
 source("~/Project-Data-Science/sentimen_analysis_tweet_141_144.R")
 
 # Define UI for application that draws a histogram
-ui <- fluidPage(
-
-    # Application title
-    titlePanel("Analisis Sentimen Biden vs Trump dengan Naive Bayes"),
-    
-    # Sidebar with a slider input for number of bins 
-    sidebarLayout(
-       sidebarPanel(
-        ),
-
-    # Show a plot of the generated distribution
-    mainPanel(
-        tabsetPanel(
-            tabPanel("Data Twitter Biden", DT::dataTableOutput('dataBiden')),
-            tabPanel("Data Twitter Trump", DT::dataTableOutput('dataTrump')),
-            tabPanel("Data Cleaned Biden", DT::dataTableOutput('dataCleanedBiden')),
-            tabPanel("Data Cleaned Trump", DT::dataTableOutput('dataCleanedTrump')),
-            tabPanel("Data Sentimen Biden", DT::dataTableOutput('dataSentimenBiden')),
-            tabPanel("Data Sentimen Trump", DT::dataTableOutput('dataSentimenTrump')),
-            tabPanel("Sentiment Analysis (Emotion) Plot", plotOutput("plot1")),
-            tabPanel("Sentiment Analysis (Polarity) Plot", plotOutput("plot2"))
+ui <- fluidPage(theme = shinytheme("flatly"),
+                
+    headerPanel("Analisis Sentimen Tweet Replies"),
+    headerPanel("pada akun Donald Trump dan Joe Biden dengan Naive Bayes"),
+   
+        mainPanel(
+            tabsetPanel(
+                tabPanel("Data Twitter Biden", DT::dataTableOutput('dataBiden')),
+                tabPanel("Data Twitter Trump", DT::dataTableOutput('dataTrump')),
+                tabPanel("Data Cleaned Biden", DT::dataTableOutput('dataCleanedBiden')),
+                tabPanel("Data Cleaned Trump", DT::dataTableOutput('dataCleanedTrump')),
+                tabPanel("Data Sentimen Biden", DT::dataTableOutput('dataSentimenBiden')),
+                tabPanel("Data Sentimen Trump", DT::dataTableOutput('dataSentimenTrump')),
+                tabPanel("Sentiment Analysis (Emotion) Plot", plotOutput("plot1")),
+                tabPanel("Sentiment Analysis (Polarity) Plot", plotOutput("plot2"))
+            )
         )
-    )
-   )
 )
  
 # Define server logic required to draw a histogram
