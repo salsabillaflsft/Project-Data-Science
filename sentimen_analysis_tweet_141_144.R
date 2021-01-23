@@ -1,9 +1,9 @@
-library(tm)
-library(SentimentAnalysis)
+library(tm) #package for Text Mining
+library(SentimentAnalysis) #package for analyzing sentiment of texts
 library(sentiment) #package for for Sentiment Analysis
 library(ggplot2) #package for data visualisations
-library(plyr)
-library(ggpubr)
+library(plyr) #for Splitting, Applying and Combining Data
+library(ggpubr) #package for data visualisations
 
 
 #Import Data
@@ -99,6 +99,9 @@ data2 <- dataTrump$text
   write.csv(results_data1, "~\\Project-Data-Science\\dataSentimenBiden.csv")
   write.csv(results_data2, "~\\Project-Data-Science\\dataSentimenTrump.csv")
   
+  View(results_data1)
+  View(results_data2)
+  
   # sort data frame
   results_data1_sort = within(results_data1,
                          emotion <- factor(emotion1, levels=names(sort(table(emotion1), decreasing=TRUE))))
@@ -114,6 +117,7 @@ data2 <- dataTrump$text
             scale_fill_manual(values = c("#bababa", "#96f78f", "#8fdaf7","#f7988f","#fa5c5c","#f7d48f","#dea050")) +
             labs(x="emotion categories", y="number of tweets",title = "Sentiment Analysis towards Joe Biden Tweets") +
             theme(plot.title = element_text(size=12))
+  
                                                                                                                                  
   #Trump
   plot2 <- ggplot(results_data2_sort, aes(x=emotion)) +

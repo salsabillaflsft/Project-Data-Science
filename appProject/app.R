@@ -1,5 +1,5 @@
-library(shiny)
-library(shinythemes)
+library(shiny) #Web Application Framework for R
+library(shinythemes) #Themes for Shiny 
 
 # Load data
 dataCleanedBiden <- read.csv("~/Project-Data-Science/dataCleanedBiden.csv")
@@ -10,12 +10,12 @@ dataSentimenTrump <- read.csv("~/Project-Data-Science/dataSentimenTrump.csv")
 #source to functions used
 source("~/Project-Data-Science/sentimen_analysis_tweet_141_144.R")
 
-# Define UI for application that draws a histogram
+# Define UI for application 
 ui <- fluidPage(theme = shinytheme("flatly"),
                 
     headerPanel("Analisis Sentimen Tweet Replies"),
     headerPanel("pada akun Donald Trump dan Joe Biden dengan Naive Bayes"),
-   
+    
         mainPanel(
             tabsetPanel(
                 tabPanel("Data Twitter Biden", DT::dataTableOutput('dataBiden')),
@@ -30,7 +30,7 @@ ui <- fluidPage(theme = shinytheme("flatly"),
         )
 )
  
-# Define server logic required to draw a histogram
+# Define server logic 
 server <- function(input, output) {
     dataBiden <- data.frame(dataBiden)
     dataTrump <- data.frame(dataTrump)
